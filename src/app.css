@@ -1,8 +1,11 @@
 * {
 	margin: 0;
+	box-sizing: border-box;
 }
 
 canvas {
-	width: 100vw;
-	height: 100vh;
+	width: 100svw;
+	height: 100svh;
+	position: fixed;
+	inset: 0;
 }

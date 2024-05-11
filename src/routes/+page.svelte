@@ -39,14 +39,13 @@
 			}
 		});
 
-		const midPoints = Array.from(otherWindows.values()).map((data) => {
+		const midPointsScreen = Array.from(otherWindows.values()).map((data) => {
 			return {
 				x: data.posX + data.width / 2,
 				y: data.posY + data.height / 2
 			};
 		});
-
-		const myMidPoint = {
+		const myMidPointScreen = {
 			x: window.screenX + window.innerWidth / 2,
 			y: window.screenY + window.innerHeight / 2
 		};
@@ -55,9 +54,19 @@
 		const ctx = canvasElement.getContext('2d');
 		if (!ctx) return;
 
-		console.log(myMidPoint, data);
-		ctx.canvas.width = screenMaxWidth;
-		ctx.canvas.height = screenMaxHeight;
+		ctx.canvas.width = data.width;
+		ctx.canvas.height = data.height;
+
+		const midPoints = midPointsScreen.map((midPoint) => {
+			return {
+				x: (midPoint.x - myMidPointScreen.x) * (data.width / screenMaxWidth) + data.width / 2,
+				y: (midPoint.y - myMidPointScreen.y) * (data.height / screenMaxHeight) + data.height / 2
+			};
+		});
+		const myMidPoint = {
+			x: data.width / 2,
+			y: data.height / 2
+		};
 
 		ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
 		ctx.strokeStyle = 'black';
