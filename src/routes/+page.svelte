@@ -16,10 +16,10 @@
 	const tickInterval = 24 / 1000;
 
 	let bc: BroadcastChannel | undefined;
-	let interval: ReturnType<typeof setInterval> | undefined;
+	let requestID: ReturnType<typeof requestAnimationFrame> | undefined;
 	let canvasElement: HTMLCanvasElement | null = null;
 
-	function tick() {
+	const tick: FrameRequestCallback = (time) => {
 		const screenMaxHeight = screen.availHeight;
 		const screenMaxWidth = screen.availWidth;
 		const data: MessageData = {
@@ -70,7 +70,9 @@
 				ctx.stroke();
 			});
 		});
-	}
+
+		requestID = requestAnimationFrame(tick);
+	};
 
 	onMount(async () => {
 		bc = new BroadcastChannel('channel');
@@ -79,12 +81,12 @@
 			otherWindows.set(event.data.windowId, event.data);
 		};
 
-		interval = setInterval(tick, tickInterval);
+		requestID = requestAnimationFrame(tick);
 	});
 
 	onDestroy(() => {
 		bc?.close();
-		clearInterval(interval);
+		requestID && cancelAnimationFrame(requestID);
 	});
 </script>
 
