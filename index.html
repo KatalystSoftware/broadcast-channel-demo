@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="./favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<link href="./_app/immutable/assets/2.CskDy2eT.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.BQtglPbM.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/entry.-0kPiSX_.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.BnLxJkeY.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.BpENHGnO.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.BG6j-tbb.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.BdjmdDYF.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/2.CVqcZ1af.js">
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">  <canvas id="canvas"></canvas> 
+			
+			<script>
+				{
+					__sveltekit_aumcbd = {
+						base: new URL(".", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.BQtglPbM.js"),
+						import("./_app/immutable/entry/app.BpENHGnO.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 2],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
