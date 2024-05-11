@@ -1,5 +1,6 @@
 {
 	"name": "broadcast-channel-demo",
+	"description": "Demo dynamic messaging between browsing contexts with broadcast channels.",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
