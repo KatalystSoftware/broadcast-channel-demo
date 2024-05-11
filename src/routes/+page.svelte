@@ -57,7 +57,7 @@
 		});
 
 		ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-		ctx.strokeStyle = 'black';
+		ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--color');
 		ctx.lineWidth = 8;
 		projectedDataPoints.forEach((point) => {
 			projectedDataPoints.forEach((otherPoint) => {
