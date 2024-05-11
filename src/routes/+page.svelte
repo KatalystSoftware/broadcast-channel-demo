@@ -19,9 +19,7 @@
 	let requestID: ReturnType<typeof requestAnimationFrame> | undefined;
 	let canvasElement: HTMLCanvasElement | null = null;
 
-	const tick: FrameRequestCallback = (time) => {
-		const screenMaxHeight = screen.availHeight;
-		const screenMaxWidth = screen.availWidth;
+	const tick: FrameRequestCallback = () => {
 		const data: MessageData = {
 			windowId: id,
 			posX: window.screenX,
@@ -34,7 +32,8 @@
 
 		otherWindows.forEach((data, windowId) => {
 			// remove data points that are not seen for two ticks
-			if ((Date.now() - data.time) / 1000 > 2 * tickInterval) {
+			const timeDiffMs = (Date.now() - data.time) / 1000;
+			if (timeDiffMs > 2 * tickInterval) {
 				otherWindows.delete(windowId);
 			}
 		});
@@ -58,7 +57,6 @@
 		});
 
 		ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-		// ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--color');
 		ctx.lineWidth = 8;
 		projectedDataPoints.forEach((point) => {
 			projectedDataPoints.forEach((otherPoint) => {
