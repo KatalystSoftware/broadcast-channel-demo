@@ -30,7 +30,7 @@
 			height: window.innerHeight,
 			time: Date.now()
 		};
-		bc?.postMessage(JSON.stringify(data));
+		bc?.postMessage(data);
 
 		otherWindows.forEach((data, windowId) => {
 			// remove data points that are not seen for two ticks
@@ -75,9 +75,8 @@
 	onMount(async () => {
 		bc = new BroadcastChannel('channel');
 
-		bc.onmessage = (event: MessageEvent<string>) => {
-			const eventData: MessageData = JSON.parse(event.data);
-			otherWindows.set(eventData.windowId, eventData);
+		bc.onmessage = (event: MessageEvent<MessageData>) => {
+			otherWindows.set(event.data.windowId, event.data);
 		};
 
 		interval = setInterval(tick, tickInterval);
