@@ -39,16 +39,7 @@
 			}
 		});
 
-		const midPointsScreen = Array.from(otherWindows.values()).map((data) => {
-			return {
-				x: data.posX + data.width / 2,
-				y: data.posY + data.height / 2
-			};
-		});
-		const myMidPointScreen = {
-			x: window.screenX + window.innerWidth / 2,
-			y: window.screenY + window.innerHeight / 2
-		};
+		const allDataPoints = [...otherWindows.values(), data];
 
 		if (!canvasElement) return;
 		const ctx = canvasElement.getContext('2d');
@@ -57,25 +48,27 @@
 		ctx.canvas.width = data.width;
 		ctx.canvas.height = data.height;
 
-		const midPoints = midPointsScreen.map((midPoint) => {
+		const projectedDataPoints = allDataPoints.map((data) => {
+			// project to canvas relative to this window mid point
 			return {
-				x: (midPoint.x - myMidPointScreen.x) * (data.width / screenMaxWidth) + data.width / 2,
-				y: (midPoint.y - myMidPointScreen.y) * (data.height / screenMaxHeight) + data.height / 2
+				x: data.posX + data.width / 2 - window.screenX,
+				y: data.posY + data.height / 2 - window.screenY
 			};
 		});
-		const myMidPoint = {
-			x: data.width / 2,
-			y: data.height / 2
-		};
 
 		ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
 		ctx.strokeStyle = 'black';
 		ctx.lineWidth = 8;
-		midPoints.forEach((midPoint) => {
-			ctx.beginPath();
-			ctx.moveTo(myMidPoint.x, myMidPoint.y);
-			ctx.lineTo(midPoint.x, midPoint.y);
-			ctx.stroke();
+		projectedDataPoints.forEach((point) => {
+			projectedDataPoints.forEach((otherPoint) => {
+				if (point.x === otherPoint.x && point.y === otherPoint.y) {
+					return;
+				}
+				ctx.beginPath();
+				ctx.moveTo(point.x, point.y);
+				ctx.lineTo(otherPoint.x, otherPoint.y);
+				ctx.stroke();
+			});
 		});
 	}
 
