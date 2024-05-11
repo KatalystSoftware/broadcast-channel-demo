@@ -1,0 +1,17 @@
+{
+	"$schema": "https://json.schemastore.org/web-manifest.json",
+	"name": "broadcast-channel-demo",
+	"short_name": "broadcast-channel-demo",
+	"start_url": "/",
+	"icons": [
+		{
+			"src": "/favicon.svg",
+			"sizes": "any",
+			"purpose": "any maskable monochrome"
+		}
+	],
+	"background_color": "#000",
+	"theme_color": "#000",
+	"display": "standalone",
+	"display_override": ["window-controls-overlay", "minimal-ui"]
+}
