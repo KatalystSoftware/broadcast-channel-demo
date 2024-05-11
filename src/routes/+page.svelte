@@ -51,19 +51,27 @@
 		const projectedDataPoints = allDataPoints.map((data) => {
 			// project to canvas relative to this window mid point
 			return {
+				id: data.windowId,
 				x: data.posX + data.width / 2 - window.screenX,
 				y: data.posY + data.height / 2 - window.screenY
 			};
 		});
 
 		ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-		ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--color');
+		// ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--color');
 		ctx.lineWidth = 8;
 		projectedDataPoints.forEach((point) => {
 			projectedDataPoints.forEach((otherPoint) => {
-				if (point.x === otherPoint.x && point.y === otherPoint.y) {
+				if (point.id === otherPoint.id) {
 					return;
 				}
+				const color = point.id.slice(0, 6);
+				const otherColor = otherPoint.id.slice(0, 6);
+				const gradient = ctx.createLinearGradient(point.x, point.y, otherPoint.x, otherPoint.y);
+				gradient.addColorStop(0, `#${color}`);
+				gradient.addColorStop(1, `#${otherColor}`);
+				ctx.strokeStyle = gradient;
+
 				ctx.beginPath();
 				ctx.moveTo(point.x, point.y);
 				ctx.lineTo(otherPoint.x, otherPoint.y);
