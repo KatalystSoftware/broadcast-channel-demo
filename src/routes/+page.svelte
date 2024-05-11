@@ -33,8 +33,8 @@
 		bc?.postMessage(JSON.stringify(data));
 
 		otherWindows.forEach((data, windowId) => {
-			// Remove window if it hasn't sent a message in 2 seconds
-			if (Date.now() - data.time > 2000) {
+			// remove data points that are not seen for two ticks
+			if ((Date.now() - data.time) / 1000 > 2 * tickInterval) {
 				otherWindows.delete(windowId);
 			}
 		});
